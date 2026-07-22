@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
+
+body {
+    margin: 0; overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    user-select: none; background-color: transparent; 
+}
+
+#game-world { position: relative; width: 100vw; height: 100vh; touch-action: none; }
+
+body.game-active, body.game-active * { cursor: none !important; }
+#custom-cursor {
+    position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+    background-image: url('images/cursor1.png');
+    background-size: contain; background-repeat: no-repeat;
+    pointer-events: none; z-index: 9999;
+    opacity: 0; transition: opacity 0.8s ease; 
+}
+body.game-active #custom-cursor { opacity: 1; }
+
+.centered-nav {
+    position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+    z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    min-width: 340px; max-width: 560px; width: 460px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-brand {
+    display: inline-flex; align-items: center;
+    color: #f8fafc; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.04em; text-decoration: none;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.brand-container { position: relative; display: inline-grid; align-items: center; }
+.brand-normal { grid-area: 1 / 1; opacity: 1; transition: opacity 1s ease; }
+.brand-pixel { 
+    grid-area: 1 / 1; font-family: 'Pixelify Sans', monospace; font-size: 1.2rem;
+    opacity: 0; transition: opacity 1s ease; 
+}
+body.game-active .brand-normal { opacity: 0; }
+body.game-active .brand-pixel { opacity: 1; }
+
+.fishing-text {
+    color: #4682B4; opacity: 0; display: inline-block; margin-left: 5px;
+    font-family: 'Pixelify Sans', monospace; font-size: 1.2rem;
+    text-shadow: 1px 1px 0px #fff; 
+    transform: translateX(-15px); transition: opacity 1s ease, transform 1s ease;
+}
+body.game-active .fishing-text {
+    opacity: 1; transform: translateX(0);
+    animation: textWave 3s ease-in-out infinite; animation-delay: 1s; 
+}
+@keyframes textWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+.nav-placeholder {
+    width: 42px; height: 34px; border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    border-radius: 999px; cursor: pointer; color: #ffffff;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.2s ease; position: relative;
+}
+.nav-placeholder:hover { background: rgba(255, 255, 255, 0.12); }
+
+.icon-emoji { opacity: 1; transition: opacity 1s ease; font-size: 20px;}
+.icon-img { 
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 24px; height: 24px; object-fit: contain;
+    opacity: 0; transition: opacity 1s ease; 
+}
+body.game-active .icon-emoji { opacity: 0; }
+body.game-active .icon-img { opacity: 1; }
+
+#ui-layer {
+    position: absolute; top: 80px; width: 100%; pointer-events: none; z-index: 100;
+    transform: translateY(-150px); opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease;
+    font-family: 'Pixelify Sans', monospace;
+}
+body.game-active #ui-layer { transform: translateY(0); opacity: 1; }
+
+#sky {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+    background-color: #87CEEB; overflow: hidden;
+    opacity: 0; transition: opacity 2s ease;
+    z-index: 1; 
+}
+body.game-active #sky { opacity: 1; }
+
+#atmosphere {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100vh; 
+    overflow: hidden; pointer-events: none; z-index: 5;
+    opacity: 0; transition: opacity 2s ease, transform 0.5s ease-in-out 0.25s;
+}
+body.game-active #atmosphere { opacity: 1; }
+
+#water-group {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+    transform: translateY(100vh); transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10;
+}
+body.game-active #water-group { transform: translateY(0); }
+
+.glass-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    color: #f8fafc; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+.glass-btn {
+    background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px; color: #f8fafc; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    transition: transform 0.2s ease, background 0.2s ease;
+    padding: 10px 20px; font-size: 20px; font-weight: bold; cursor: pointer; font-family: inherit;
+}
+.glass-btn:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.25); }
+.red-btn { background: rgba(255, 76, 76, 0.3); }
+.red-btn:hover { background: rgba(255, 76, 76, 0.6); }
+
+.shop-btn { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 10px 15px; border-radius: 12px; }
+.shop-name { font-size: 18px; text-align: left; }
+.shop-details { display: flex; flex-direction: column; align-items: flex-end; }
+.shop-cost { display: flex; align-items: center; gap: 4px; font-size: 16px; color: #FFD700; }
+.shop-cost img { width: 16px; height: 16px; object-fit: contain; }
+.shop-lvl { font-size: 14px; margin-top: 2px; }
+
+.skin-cost { color: #FF6B81; } 
+.skin-owned { color: #32CD32; font-weight: bold; text-shadow: 0 0 5px rgba(50,205,50,0.8); letter-spacing: 2px; } 
+
+.lvl-1 { color: #32CD32; } .lvl-2 { color: #00FFFF; } .lvl-3 { color: #1E90FF; } 
+.lvl-4 { color: #8A2BE2; } .lvl-5 { color: #FF4500; } 
+.lvl-max { color: #FFD700; font-weight: bold; text-shadow: 0 0 5px rgba(255,215,0,0.8); letter-spacing: 2px; } 
+
+#top-left { position: absolute; left: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; pointer-events: auto; }
+#top-right { position: absolute; right: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; pointer-events: auto; }
+.top-row { display: flex; gap: 10px; align-items: flex-start; }
+
+#gold-counter { padding: 10px 20px; font-size: 28px; font-weight: bold; cursor: default; display: flex; align-items: center; gap: 10px; border-radius: 999px; }
+#gold-counter img { height: 28px; width: 28px; object-fit: contain; }
+.icon-btn { padding: 10px; display: flex; align-items: center; justify-content: center; }
+.icon-btn img { width: 32px; height: 32px; object-fit: contain; }
+
+.hidden-menu { display: none; padding: 15px; width: 300px; position: relative; font-size: 18px; }
+.hidden-menu h3 { margin-top: 0; text-align: center; }
+#debug-close { position: absolute; top: 5px; right: 5px; width: auto; padding: 2px 8px; }
+.glass-input { width: calc(100% - 12px); margin-bottom: 10px; padding: 8px; font-family: inherit; font-size: 16px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 8px; }
+
+@media (max-width: 600px) {
+    #ui-layer { top: 70px; }
+    .hidden-menu { width: 260px; font-size: 16px; }
+    #gold-counter { font-size: 20px; padding: 8px 16px; }
+    .shop-name { font-size: 16px; }
+    .centered-nav { width: 90%; min-width: unset; }
+}
+
+.cloud { position: absolute; opacity: 0.9; z-index: 10; animation: drift linear infinite; object-fit: contain; }
+.seagull { position: absolute; object-fit: contain; z-index: 15; }
+@keyframes drift { from { left: -200px; } to { left: 100vw; } }
+@keyframes flyGull { from { left: -100px; } to { left: 100vw; } }
+@keyframes flyGullRight { from { right: -100px; } to { right: 100vw; } }
+
+#water { position: absolute; bottom: 0; left: 0; width: 100%; height: 15vh; background-color: #4682B4; transition: height 0.5s ease; pointer-events: auto; }
+#fish-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+
+.water-surface { position: absolute; left: 0; width: 100%; background-image: url('images/water.png'); background-repeat: repeat-x; }
+.wave-back { top: -40px; height: 48px; background-size: 48px 48px; z-index: 48; opacity: 0.6; animation: panLeft 4s infinite linear, bobUp 2.5s infinite ease-in-out alternate; }
+.wave-front { top: -45px; height: 64px; background-size: 64px 64px; z-index: 52; opacity: 1; animation: panRight 3.5s infinite linear, bobDown 3s infinite ease-in-out alternate; }
+@keyframes panLeft { 0% { background-position: 0 0; } 100% { background-position: -48px 0; } }
+@keyframes panRight { 0% { background-position: 0 0; } 100% { background-position: 64px 0; } }
+@keyframes bobUp { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+@keyframes bobDown { 0% { transform: translateY(0); } 100% { transform: translateY(6px); } }
+
+#seabed { 
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 25px; 
+    background-color: #C2B280; border-top: 2px solid #A89B6C; z-index: 40; 
+    transform: translateY(100%); transition: transform 1.5s ease-out;
+}
+#seabed.show-seabed { transform: translateY(0); }
+.sea-decor { position: absolute; bottom: 20px; object-fit: contain; z-index: 41; }
+
+#boat, #auto-boat { position: absolute; bottom: 15vh; transition: bottom 0.5s ease; z-index: 50; }
+#boat { left: 50%; transform: translateX(-50%); animation: boat-bob 3s infinite ease-in-out; margin-bottom: -15px; }
+#auto-boat { display: none; left: calc(50% + 70px); z-index: 49; animation: auto-boat-bob 3s infinite ease-in-out 1.2s; margin-bottom: -15px; }
+@keyframes boat-bob { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+@keyframes auto-boat-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+#boat img, #auto-boat img { width: 80px; height: 80px; object-fit: contain; }
+
+#fishing-line { position: absolute; left: 50%; width: 2px; background-color: rgba(255,255,255,0.6); z-index: 49; }
+#hook { position: absolute; left: 50%; transform: translateX(-50%); z-index: 55; }
+#hook img { width: 36px; height: 36px; object-fit: contain; transition: filter 0.2s ease; }
+.fish { position: absolute; z-index: 40; }
+.fish img { width: 50px; height: 50px; object-fit: contain; }
+
+.floating-text, #gold-rain-text { font-family: 'Pixelify Sans', monospace !important; }
+
+.floating-text { 
+    position: absolute; color: #FFD700; font-size: 28px; font-weight: bold; 
+    text-shadow: 2px 2px 0px #000; pointer-events: none; z-index: 200; 
+    animation: floatUp 1s ease-out forwards; 
+}
+
+.water-particle {
+    position: absolute; width: 6px; height: 6px; background-color: #E0FFFF;
+    border-radius: 50%; pointer-events: none; z-index: 55;
+    animation: splashAnim 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes splashAnim { 
+    0% { transform: translate(0, 0) scale(1); opacity: 1; } 
+    100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; } 
+}
+
+@keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-50px); } }
+
+#gold-rain-text { 
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); 
+    color: #FFD700; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 0px #000; 
+    white-space: nowrap; display: none; 
+}
+.gold-rain-anim { display: block !important; animation: floatUp 1.5s ease-out forwards !important; }
+
+#package-container { position: absolute; z-index: 60; width: 60px; height: 60px; transform: translateX(-50%); }
+#package-container img { position: absolute; top: 12px; left: 12px; width: 36px; height: 36px; object-fit: contain; }
+#package-container svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+#package-container circle { fill: none; stroke-width: 6; }
+.pkg-bg { stroke: #808080; opacity: 0.7; }
+.pkg-progress { stroke: #32CD32; stroke-dasharray: 163.36; stroke-dashoffset: 163.36; transition: stroke-dashoffset 0.1s linear; }
