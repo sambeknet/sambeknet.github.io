@@ -22,6 +22,11 @@ window.addEventListener('scroll', () => {
 });
 
 const whooshAudio = new Audio('sounds/whoosh.mp3');
+whooshAudio.volume = 0.15; 
+
+const buyAudioMain = new Audio('sounds/buy.mp3');
+buyAudioMain.volume = 0.15; 
+
 const fishingBtn = document.getElementById('go-to-fishing-btn');
 
 let secretClickCount = 0;
@@ -49,15 +54,22 @@ if (scrollTopBtn) {
         });
 
         if (fishingBtn) {
-            fishingBtn.style.transition = 'opacity 0.5s ease';
-            fishingBtn.style.opacity = '0';
-        }
-
-        document.body.classList.add('enter-veil-active');
-
+    fishingBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        buyAudioMain.play().catch(()=>{});
+        
+        const contentElements = document.querySelectorAll('main, .site-footer');
+        
+        contentElements.forEach(el => {
+            el.classList.add('fade-out-content');
+        });
+        
         setTimeout(() => {
-            window.location.href = "/restricted";
+            window.location.href = "/fishing";
         }, 1500);
+    });
+}
         
         return;
     }
