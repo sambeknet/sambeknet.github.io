@@ -35,10 +35,14 @@ body.game-active #custom-cursor { opacity: 1; }
 }
 
 .nav-brand {
-    display: inline-flex; align-items: center;
-    color: #f8fafc; font-size: 1.1rem; font-weight: 700;
-    letter-spacing: 0.04em; text-decoration: none;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
 }
 
 .brand-container { position: relative; display: inline-grid; align-items: center; }
