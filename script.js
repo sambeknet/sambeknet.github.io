@@ -200,5 +200,6 @@ document.getElementById('go-to-fishing-btn').addEventListener('click', function(
     
     setTimeout(() => {
         window.location.href = "/fishing";
+        window.location.href = "/restricted";
     }, 1500);
 });
