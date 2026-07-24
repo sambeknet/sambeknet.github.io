@@ -1,90 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sambeknet.github.io</title>
+  <link rel="icon" href=" assets/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-mode">
-    <nav>
-        <h2 class="logo">SamBek.</h2>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <img src="assets/images/light-button.png" id="darkModeToggle" class="theme-icon" alt="Toggle Theme">
-    </nav>
-    <header id="home" class="hero">
-        <div class="hero-bg">
-            <lottie-player src="assets/images/header-animation.json" background="transparent" speed="1" loop autoplay preserveAspectRatio="xMidYMid slice"></lottie-player>
+<body>
+  <nav class="centered-nav" id="pageNav">
+    <a class="nav-brand">sambeknet.github.io</a>
+    <a class="nav-placeholder" href="https://www.github.com/sambeknet" aria-label="GitHub">🐙</a>
+  </nav>
+
+  <main>
+    <img class="about-hero-image" src=" assets/images/welcomeglass.png" alt="Welcome glass artwork">
+
+    <section class="content about-section" id="about">
+      <h2>About</h2>
+      <div class="about-layout">
+        <p class="about-copy">Hello! I’m Samet Bekiroğlu, a computer engineering student at Afyon Kocatepe University. When it comes to my studies, I am especially interested in learning about artificial intelligence and exploring different coding languages. I’ve also completed two Erasmus programs, living mainly in Hungary and Romania, which gave me the chance to travel across several other countries. I am a very extroverted person, so whether I am at university or traveling abroad, I love meeting new people and spending time with my friends.</p>
+        <div class="about-widget">
+          <!-- Elfsight Slider | Untitled Slider -->
+          <script src="https://elfsightcdn.com/platform.js" async></script>
+          <div class="elfsight-app-bad7ab0c-1f83-40f1-a68c-c5509ea957e3" data-elfsight-app-lazy></div>
         </div>
-        <div class="hero-content">
-            <h1>Hi, I'm Samet Bekiroğlu</h1>
-            <p>Computer Engineering Student</p>
-            <a href="#projects" class="btn">View My Work</a>
-        </div>
-    </header>
-    <section id="about" class="section-padding">
-        <h2>About Me</h2>
-        <p>My name is Samet Bekiroğlu, I'm an Erasmus student studying computer engineering in Constantin Brancusi University. </p>
-        <h3 class="skills-title">Technical Skills</h3>
-        <ul class="skills-list">
-            <li>HTML5</li>
-            <li>CSS3</li>
-            <li>JavaScript</li>
-            <li>Python</li>
-            <li>SDL</li>
-            <li>Arduino</li>
-        </ul>
+      </div>
     </section>
-    <section id="projects" class="projects-wrapper bg-light">
-        <div class="projects-bg">
-            <lottie-player src="assets/images/projects-animation.json" background="transparent" speed="1" loop autoplay preserveAspectRatio="xMidYMid slice"></lottie-player>
-        </div>
-        <div class="projects-content section-padding">
-            <h2>My Projects</h2>
-            <div class="project-grid">
-                <div class="card">
-                    <h3>3D Gesture-Controlled Graphics Engine</h3>
-                    <p>Hybrid computer vision and 3D graphics application that allows a user to control real-time 3D rendering using color tracking.</p>
-                    <a href="https://github.com/sametbe/3D-Gesture-Controlled-Graphics-Engine" target="_blank" class="btn-small">View Code</a>
-                </div>
-                <div class="card">
-                    <h3>Smart House Using Ardunio</h3>
-                    <p>A model of a smart house using Ardunio and many sensors.</p>
-                    <a href="https://github.com/sametbe/Smart-House-Using-Arduino-Project" target="_blank" class="btn-small">View Code</a>
-                </div>
-                <div class="card">
-                    <h3>Energy Distribution Network Database</h3>
-                    <p>Clean and reliable relational database to manage an electricity distribution grid using Oracle standards.</p>
-                    <a href="https://github.com/sametbe/Energy-Distribution-Network-Database-Project" target="_blank" class="btn-small">View Code</a>
-                </div>
-            </div>
-        </div>
+
+    <section class="content hobbies" id="hobbies">
+      <h2>Hobbies</h2>
+      <p>These are some of the visual interests and creative references I keep returning to for inspiration.</p>
+      <!-- Elfsight Photo Gallery | Untitled Photo Gallery -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-61825491-1241-4702-829f-787aecb43cda" data-elfsight-app-lazy></div>
     </section>
-    <section id="contact" class="section-padding">
-        <h2>Get In Touch</h2>
-        <p>You can contact me via these links.</p>
-        <div class="social-links">
-            <a href="mailto:sametbekroglu1@gmail.com">
-                <img src="assets/images/gmail-white.png" id="gmailIcon" alt="Email Me">
-            </a>
-            <a href="https://github.com/sametbek" target="_blank">
-                <img src="assets/images/github-white.png" id="githubIcon" alt="My GitHub">
-            </a>
-            <a href="https://www.linkedin.com/in/sametbek/" target="_blank">
-                <img src="assets/images/linkedin-white.png" id="linkedinIcon" alt="My LinkedIn">
-            </a>
-        </div>
+
+    <section class="content places" id="places">
+      <h2>Places</h2>
+      <p>Discover the locations and brand showcases I enjoy, displayed in a full-width experience.</p>
+      <!-- Elfsight Logo Showcase | Untitled Logo Showcase -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-6730edbc-4604-4e77-a088-8070a4daf69a" data-elfsight-app-lazy></div>
     </section>
-    <footer>
-        <p>&copy; 2026 Samet Bekiroğlu.</p>
-    </footer>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script src="script.js"></script>
+
+    <section class="content" id="projects">
+      <h2>Projects</h2>
+      <p>Here are a few recent projects that reflect my work in graphics, embedded systems, data design, and web development.</p>
+      <div class="projects-grid">
+        <article class="project-mini-card project-mini-card--coding">
+          <h3>3D Gesture-Controlled Graphics Engine</h3>
+          <p>Hybrid computer vision and 3D graphics application that allows a user to control real-time 3D rendering using color tracking.</p>
+          <a href="https://github.com/sambeknet/3D-Gesture-Controlled-Graphics-Engine-Project" target="_blank" rel="noopener noreferrer">More on Github</a>
+        </article>
+        <article class="project-mini-card project-mini-card--chip">
+          <h3>Smart House Using Arduino</h3>
+          <p>A model of a smart house using Arduino and many other sensors.</p>
+          <a href="https://github.com/sambeknet/Smart-House-Using-Arduino-Project" target="_blank" rel="noopener noreferrer">More on Github</a>
+        </article>
+        <article class="project-mini-card project-mini-card--energy">
+          <h3>Energy Distribution Network Database</h3>
+          <p>Clean and reliable relational database to manage an electricity distribution grid using Oracle standards.</p>
+          <a href="https://github.com/sambeknet/Energy-Distribution-Network-Database-Project" target="_blank" rel="noopener noreferrer">More on Github</a>
+        </article>
+        <article class="project-mini-card project-mini-card--website">
+          <h3>Portfolio Website</h3>
+          <p>A simple personal website showcasing my work, interests, and contact links.</p>
+          <a href="https://github.com/sambeknet/sambeknet.github.io" target="_blank" rel="noopener noreferrer">More on Github</a>
+        </article>
+      </div>
+    </section>
+
+    <div class="contact-row">
+      <div class="card-column">
+        <section class="content linkedin-card" id="contact">
+          <div class="linkedin-embed">
+            <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+            <div class="badge-base LI-profile-badge" data-locale="tr_TR" data-size="large" data-theme="dark" data-type="HORIZONTAL" data-vanity="sambeknet" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://tr.linkedin.com/in/sambeknet?trk=profile-badge" aria-label="Samet Bekiroğlu"></a></div>
+            <a class="linkedin-fallback" href="https://tr.linkedin.com/in/sambeknet?trk=profile-badge" target="_blank" rel="noopener noreferrer">More on LinkedIn</a>
+          </div>
+        </section>
+
+        <section class="content github-card">
+          <div class="github-embed">
+            <a class="github-card-link" href="https://github.com/sambeknet" target="_blank" rel="noopener noreferrer">
+              <img class="github-card-svg" src="https://githubcard.com/sambeknet.svg" alt="GitHubCard">
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <aside class="iframe-card">
+        <a class="linktree-card" href="https://linktr.ee/sambeknet" target="_blank" rel="noopener noreferrer">
+          <img class="linktree-image default" src=" assets/images/linktree_1.jpeg" alt="Linktree preview">
+          <img class="linktree-image hover" src=" assets/images/linktree_2.jpeg" alt="Linktree hover preview">
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <a class="glass-button scroll-top-btn" href="#home" aria-label="Back to top">↑</a>
+    <p>2026 Samet Bekiroğlu</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
