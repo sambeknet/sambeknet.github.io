@@ -21,10 +21,100 @@ window.addEventListener('scroll', () => {
   lastScrollY = currentScrollY;
 });
 
+const whooshAudio = new Audio('../assets/sounds/whoosh.mp3');
+whooshAudio.volume = 0.15; 
+
+const buyAudioMain = new Audio('../assets/sounds/buy.mp3');
+buyAudioMain.volume = 0.15; 
+
+const fishingBtn = document.getElementById('go-to-fishing-btn');
+
+if (fishingBtn) {
+    fishingBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        buyAudioMain.play().catch(()=>{});
+        
+        const contentElements = document.querySelectorAll('main, .site-footer');
+        
+        contentElements.forEach(el => {
+            el.classList.add('fade-out-content');
+        });
+        
+        setTimeout(() => {
+            window.location.href = "/fishing";
+        }, 1500);
+    });
+}
+
+let secretClickCount = 0;
+let secretTimer;
+let armedTimer;
+let isArmed = false;
+
 if (scrollTopBtn) {
   scrollTopBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    event.preventDefault(); 
+
+    const icon = scrollTopBtn.querySelector('.btn-icon');
+
+    if (isArmed) {
+        clearTimeout(armedTimer);
+        isArmed = false;
+        
+        whooshAudio.play().catch(()=>{});
+
+        const contentElements = document.querySelectorAll('main, .site-footer');
+        contentElements.forEach(el => {
+            el.style.transition = 'transform 1.5s cubic-bezier(0.5, 0, 1, 1), opacity 1.5s ease-in';
+            el.style.transform = 'translateY(-150vh)';
+            el.style.opacity = '0'; 
+        });
+
+        if (fishingBtn) {
+            fishingBtn.style.transition = 'opacity 0.5s ease';
+            fishingBtn.style.opacity = '0';
+        }
+
+        document.body.classList.add('enter-veil-active');
+
+        setTimeout(() => {
+            window.location.href = "/restricted";
+        }, 1500);
+        
+        return;
+    }
+
+    secretClickCount++;
+    
+    if (secretClickCount === 1) {
+        secretTimer = setTimeout(() => {
+            secretClickCount = 0;
+        }, 5000);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    } else if (secretClickCount === 3) {
+        clearTimeout(secretTimer);
+        secretClickCount = 0;
+        isArmed = true;
+
+        if (icon) {
+            icon.classList.remove('icon-up');
+            icon.classList.add('icon-down');
+        }
+
+        armedTimer = setTimeout(() => {
+            isArmed = false;
+            if (icon) {
+                icon.classList.remove('icon-down');
+                icon.classList.add('icon-up');
+            }
+        }, 5000);
+        
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 }
 
@@ -109,17 +199,3 @@ if (projectCards.length) {
 }
 
 initLinkedinFallback();
-
-document.getElementById('go-to-fishing-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    const contentElements = document.querySelectorAll('main, .site-footer');
-    
-    contentElements.forEach(el => {
-        el.classList.add('fade-out-content');
-    });
-    
-    setTimeout(() => {
-        window.location.href = "/fishing";
-    }, 1500);
-});
