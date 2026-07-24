@@ -60,7 +60,7 @@ async function preloadAudio() {
 }
 preloadAudio();
 
-function playsounds(name, loop = false) {
+function playSound(name, loop = false) {
     if (!audioBuffers[name]) return;
     
     if (audioCtx.state === 'suspended') {
@@ -94,15 +94,15 @@ document.addEventListener('click', () => {
     if (audioCtx.state === 'suspended') audioCtx.resume();
     if (isGameActive && !bgMusicStarted) {
         bgMusicStarted = true;
-        playsounds('background', true);
-        setTimeout(() => { playsounds('accordion', false); }, 5000);
+        playSound('background', true);
+        setTimeout(() => { playSound('accordion', false); }, 5000);
     }
 }, { once: false });
 
 document.getElementById('game-toggle-btn').addEventListener('click', (e) => {
     e.preventDefault();
     
-    playsounds('buy');
+    playSound('buy');
     
     isGameActive = false;
     document.body.classList.remove('game-active');
@@ -119,7 +119,7 @@ document.addEventListener('click', (e) => {
     let interactable = e.target.closest('.interactable');
     if (interactable && interactable.id !== 'game-toggle-btn') {
         let isUpgradeBtn = interactable.id && interactable.id.startsWith('upg-');
-        if (!isUpgradeBtn) playsounds('click');
+        if (!isUpgradeBtn) playSound('click');
     }
 });
 
@@ -220,7 +220,7 @@ document.getElementById("debug-package").addEventListener("click", () => {
 
 document.getElementById("upg-water").addEventListener("click", () => {
     if (waterLvl < 6 && gold >= upgradeCosts[waterLvl - 1]) { 
-        playsounds('buy'); 
+        playSound('buy'); 
         gold -= upgradeCosts[waterLvl - 1]; 
         waterLvl++; 
         updateWaterHeight(); 
@@ -229,7 +229,7 @@ document.getElementById("upg-water").addEventListener("click", () => {
 });
 document.getElementById("upg-auto").addEventListener("click", () => {
     if (autoLvl < 6 && gold >= upgradeCosts[autoLvl]) { 
-        playsounds('buy'); 
+        playSound('buy'); 
         gold -= upgradeCosts[autoLvl]; 
         autoLvl++; 
         updateUI(); 
@@ -237,7 +237,7 @@ document.getElementById("upg-auto").addEventListener("click", () => {
 });
 document.getElementById("upg-net").addEventListener("click", () => {
     if (netLvl < 4 && gold >= upgradeCosts[netLvl - 1]) { 
-        playsounds('buy'); 
+        playSound('buy'); 
         gold -= upgradeCosts[netLvl - 1]; 
         netLvl++; 
         updateUI(); 
@@ -245,7 +245,7 @@ document.getElementById("upg-net").addEventListener("click", () => {
 });
 document.getElementById("upg-golden").addEventListener("click", () => {
     if (goldenLvl < 5 && gold >= upgradeCosts[goldenLvl - 1]) { 
-        playsounds('buy'); 
+        playSound('buy'); 
         gold -= upgradeCosts[goldenLvl - 1]; 
         goldenLvl++; 
         updateUI(); 
@@ -627,7 +627,7 @@ setInterval(() => {
         circle.style.strokeDashoffset = offset;
         
         if (activePackage.progress >= activePackage.maxProgress) {
-            playsounds('special');
+            playSound('special');
             let reward = waterLvl * 100;
             gold += reward; totalGold += reward;
             showFloatingText("+" + reward + " Gold!", pRect.left, pRect.top);
@@ -657,7 +657,7 @@ setInterval(() => {
 
             if (type === "trash") {
                 if (stunTimer <= 0) {
-                    playsounds('drip');
+                    playSound('drip');
                     stunTimer = 10000;
                     hookedFishes = []; 
                     updateHookDisplay();
@@ -667,7 +667,7 @@ setInterval(() => {
             } 
             else if (stunTimer <= 0 && hookedFishes.length < netLvl) {
                 if (type === "special") {
-                    playsounds('special');
+                    playSound('special');
                     goldenModeTimer = 10000; 
                     triggerGoldRainText();
                     showFloatingText("GOLDEN MODE!", hookRect.left, hookRect.top);
@@ -682,7 +682,7 @@ setInterval(() => {
                         }
                     });
                 } else {
-                    playsounds('reel');
+                    playSound('reel');
                     let fValue = parseInt(f.getAttribute("data-value"));
                     let fSrc = f.querySelector("img").src;
                     hookedFishes.push({ value: fValue, src: fSrc });
@@ -694,8 +694,8 @@ setInterval(() => {
     }
     
     if (hookedFishes.length > 0 && lineLength < 20) {
-        playsounds('splash');
-        playsounds('bell');
+        playSound('splash');
+        playSound('bell');
         
         let batchGold = 0;
         hookedFishes.forEach(fish => { batchGold += fish.value; });
