@@ -1,94 +1,252 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+html {
+    scroll-behavior: smooth;
 }
-
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #1a1a1a;
-  line-height: 1.6;
-  padding: 4rem 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
 }
-
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+nav {
+    background-color: #ddd;
+    color: #333;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
+nav .logo {
+    margin: 0;
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+nav a:hover {
+    color: #00d2ff;
+}
+.theme-icon {
+    width: 35px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.theme-icon:hover {
+    transform: scale(1.15);
+}
+.hero {
+    position: relative;
+    min-height: 80vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.hero-bg lottie-player {
+    width: 100%;
+    height: 100%;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+.hero p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.btn {
+    background-color: #00d2ff;
+    color: #1a1a1a;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    display: inline-block;
+}
+.btn:hover {
+    background-color: #0099cc;
+    color: #fff;
+}
+.btn-small {
+    background-color: #2b2b2b;
+    color: #fff;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 15px;
+    position: relative;
+    z-index: 3;
+}
+.btn-small:hover {
+    background-color: #00d2ff;
+    color: #1a1a1a;
+}
+.section-padding {
+    padding: 80px 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.bg-light {
+    background-color: #fff;
+}
+.skills-title {
+    margin-top: 30px;
+}
+.skills-list {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+}
+.skills-list li {
+    background-color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #495057;
+}
+.projects-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.projects-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.projects-bg lottie-player {
+    width: 100%;
+    height: 100%;
+}
+.projects-content {
+    position: relative;
+    z-index: 2;
+}
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
 .card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 2.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.6s ease-out, opacity 0.6s ease-out, box-shadow 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(221, 221, 221, 0.5);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
 }
-
-.card.visible {
-  opacity: 1;
-  transform: translateY(0);
+.card:hover {
+    transform: translateY(-5px);
 }
-
-.card.visible:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+.card h3 {
+    margin-top: 0;
 }
-
-h1 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.75rem;
+.social-links {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
 }
-
-h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  color: #555;
+.social-links img {
+    width: 40px;
+    height: auto;
+    transition: transform 0.3s ease;
 }
-
-p {
-  color: #666;
-  font-size: 1.05rem;
-  margin-bottom: 1rem;
+.social-links a:hover img {
+    transform: scale(1.15);
 }
-
-p:last-child {
-  margin-bottom: 0;
+footer {
+    background-color: #ddd;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    border-top: 1px solid #ddd;
 }
-
-a {
-  color: #000;
-  text-decoration: underline;
-  text-decoration-color: #ccc;
-  text-underline-offset: 4px;
-  transition: text-decoration-color 0.2s ease;
+.dark-mode {
+    background-color: #111;
+    color: #fff;
 }
-
-a:hover {
-  text-decoration-color: #000;
+.dark-mode nav {
+    background-color: #222;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
-
-.tags {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+.dark-mode nav a {
+    color: #fff;
 }
-
-.tag {
-  background: #f0f0f0;
-  padding: 0.3rem 0.8rem;
-  border-radius: 99px;
-  font-size: 0.85rem;
-  color: #444;
-  font-weight: 500;
+.dark-mode nav a:hover {
+    color: #00d2ff;
+}
+.dark-mode footer {
+    background-color: #222;
+    color: #fff;
+    border-top: 1px solid #444;
+}
+.dark-mode .hero {
+    background-color: #222;
+}
+.dark-mode .hero-content {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.dark-mode .hero p {
+    color: #fff;
+}
+.dark-mode .bg-light {
+    background-color: #222;
+}
+.dark-mode .card {
+    background-color: rgba(30, 30, 30, 0.85);
+    border-color: rgba(68, 68, 68, 0.5);
+    color: #fff;
+}
+.dark-mode .skills-list li {
+    background-color: #222;
+    color: #fff;
 }
