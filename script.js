@@ -84,12 +84,12 @@ function createStaticBackground(url) {
 async function initProjectCardBackgrounds() {
   for (const card of projectCards) {
     const animatedUrl = card.classList.contains('project-mini-card--coding')
-      ? ' assets/images/coding.webp'
+      ? 'assets/images/coding.webp'
       : card.classList.contains('project-mini-card--chip')
-        ? ' assets/images/chip.webp'
+        ? 'assets/images/chip.webp'
         : card.classList.contains('project-mini-card--energy')
-          ? ' assets/images/energy.webp'
-          : ' assets/images/website.webp';
+          ? 'assets/images/energy.webp'
+          : 'assets/images/website.webp';
 
     const staticUrl = await createStaticBackground(animatedUrl);
     card.style.setProperty('--card-bg', staticUrl);
@@ -109,3 +109,17 @@ if (projectCards.length) {
 }
 
 initLinkedinFallback();
+
+document.getElementById('go-to-fishing-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const contentElements = document.querySelectorAll('main, .site-footer');
+    
+    contentElements.forEach(el => {
+        el.classList.add('fade-out-content');
+    });
+    
+    setTimeout(() => {
+        window.location.href = "/fishing";
+    }, 1500);
+});
