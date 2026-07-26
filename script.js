@@ -359,10 +359,10 @@ let bottomTimer = null;
 let isHintVisible = false;
 
 function handleBottomTimer() {
-    
     const isAtBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 20;
+    const isDesktop = window.innerWidth > 760;
 
-    if (isAtBottom) {
+    if (isAtBottom && isDesktop) {
         if (!isHintVisible && bottomTimer === null) {
             bottomTimer = setTimeout(() => {
                 footerText.style.opacity = '0'; 
