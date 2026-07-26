@@ -311,4 +311,7 @@ canvas {
     width: 38px;
     height: 38px;
   }
+  #archive-world {
+    padding-bottom: 80px; 
+  }
 }
