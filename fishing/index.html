@@ -20,21 +20,31 @@
           <span class="fishing-text">/fishing</span>
       </a>
       
-      <a class="nav-placeholder interactable" id="game-toggle-btn" href="javascript:void(0)" aria-label="Fishing">
-          <span class="icon-emoji">🎣</span>
-          <img class="icon-img" src="../assets/images/rod.png" alt="Rod">
+      
+      <a class="nav-placeholder interactable" id="game-toggle-btn" href="javascript:void(0)" aria-label="Exit Fishing">
+          <img class="icon-img" src="../assets/images/arrow.png" alt="Exit">
       </a>
     </nav>
 
     <div id="ui-layer">
         <div id="top-left">
-            <button id="stats-button" class="glass-btn icon-btn interactable"><img src="../assets/images/stats.png" alt="Stats"></button>
+            <div style="position: relative; display: inline-block;">
+                <button id="stats-button" class="glass-btn icon-btn interactable"><img src="../assets/images/stats.png" alt="Stats"></button>
+                
+                <div id="tut-stats-ptr" class="tutorial-el ui-ptr">
+                    <img src="../assets/images/arrow.png" class="ptr-up" alt="Up">
+                    <span class="tut-text">Stats</span>
+                </div>
+            </div>
+            
             <div id="stats-menu" class="hidden-menu glass-panel">
                 <h3>Statistics</h3>
-                <p>Time Played: <span id="stat-time">0h 0m 0s</span></p>
-                <p>Manual Fish: <span id="stat-manual">0</span></p>
-                <p>Total Fish: <span id="stat-total">0</span></p>
-                <p>Total Gold: <span id="stat-total-gold">0</span></p>
+                <p><img src="../assets/images/clock.png" class="stat-icon" alt="Time"> Time Played: <span id="stat-time">0h 0m 0s</span></p>
+                <p><img src="../assets/images/rod.png" class="stat-icon" alt="Rod"> Manual Fish: <span id="stat-manual">0</span></p>
+                <p><img src="../assets/images/rod.png" class="stat-icon" alt="Rod"> Total Fish: <span id="stat-total">0</span></p>
+                <p><img src="../assets/images/gold.png" class="stat-icon" alt="Gold"> Total Gold: <span id="stat-total-gold">0</span></p>
+                
+                <button id="tutorial-toggle-btn" class="glass-btn interactable" style="width: 100%; margin-top: 15px; font-size: 16px;">Open Tutorial</button>
             </div>
         </div>
 
@@ -51,10 +61,25 @@
                     <div id="debug-info"></div>
                 </div>
 
-                <div id="gold-counter" class="glass-panel">
-                    <img src="../assets/images/gold.png" alt="Gold"> <span id="current-gold">0</span>
+                <div style="position: relative; display: inline-block;">
+                    <div id="gold-counter" class="glass-panel">
+                        <img src="../assets/images/gold.png" alt="Gold"> <span id="current-gold">0</span>
+                    </div>
+                    
+                    <div id="tut-gold-ptr" class="tutorial-el ui-ptr">
+                        <img src="../assets/images/arrow.png" class="ptr-up" alt="Up">
+                        <span class="tut-text">Gold</span>
+                    </div>
                 </div>
-                <button id="shop-button" class="glass-btn icon-btn interactable"><img src="../assets/images/shop.png" alt="Shop"></button>
+                
+                <div style="position: relative; display: inline-block;">
+                    <button id="shop-button" class="glass-btn icon-btn interactable"><img src="../assets/images/shop.png" alt="Shop"></button>
+                    
+                    <div id="tut-shop-ptr" class="tutorial-el ui-ptr">
+                        <img src="../assets/images/arrow.png" class="ptr-up" alt="Up">
+                        <span class="tut-text">Shop</span>
+                    </div>
+                </div>
             </div>
 
             <div id="shop-menu" class="hidden-menu glass-panel">
@@ -100,83 +125,55 @@
                 </div>
 
                 <div id="skins-container" style="display: none;">
-                    
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="1">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Canoe</span>
                             <img src="../assets/images/boat1.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="skin-status skin-owned" id="skin-status-1">OWNED</span>
-                        </div>
+                        <div class="shop-details"><span class="skin-status skin-owned" id="skin-status-1">OWNED</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="2">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Sailboat</span>
                             <img src="../assets/images/boat2.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-2"><img src="../assets/images/rod.png"> 100</span>
-                            <span class="skin-status skin-owned" id="skin-status-2" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-2"><img src="../assets/images/rod.png"> 100</span><span class="skin-status skin-owned" id="skin-status-2" style="display:none;">USE</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="3">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Speedboat</span>
                             <img src="../assets/images/boat3.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-3"><img src="../assets/images/rod.png"> 500</span>
-                            <span class="skin-status skin-owned" id="skin-status-3" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-3"><img src="../assets/images/rod.png"> 500</span><span class="skin-status skin-owned" id="skin-status-3" style="display:none;">USE</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="4">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Motorboat</span>
                             <img src="../assets/images/boat4.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-4"><img src="../assets/images/rod.png"> 1000</span>
-                            <span class="skin-status skin-owned" id="skin-status-4" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-4"><img src="../assets/images/rod.png"> 1000</span><span class="skin-status skin-owned" id="skin-status-4" style="display:none;">USE</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="5">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Ferry</span>
                             <img src="../assets/images/boat5.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-5"><img src="../assets/images/rod.png"> 2000</span>
-                            <span class="skin-status skin-owned" id="skin-status-5" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-5"><img src="../assets/images/rod.png"> 2000</span><span class="skin-status skin-owned" id="skin-status-5" style="display:none;">USE</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="6">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Ship</span>
                             <img src="../assets/images/boat6.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-6"><img src="../assets/images/rod.png"> 3000</span>
-                            <span class="skin-status skin-owned" id="skin-status-6" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-6"><img src="../assets/images/rod.png"> 3000</span><span class="skin-status skin-owned" id="skin-status-6" style="display:none;">USE</span></div>
                     </button>
-
                     <button class="glass-btn shop-btn interactable skin-btn" data-skin="7">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span class="shop-name">Passenger Ship</span>
                             <img src="../assets/images/boat7.png" style="width:24px; height:24px; object-fit:contain;">
                         </div>
-                        <div class="shop-details">
-                            <span class="shop-cost skin-cost" id="skin-cost-7"><img src="../assets/images/rod.png"> 5000</span>
-                            <span class="skin-status skin-owned" id="skin-status-7" style="display:none;">USE</span>
-                        </div>
+                        <div class="shop-details"><span class="shop-cost skin-cost" id="skin-cost-7"><img src="../assets/images/rod.png"> 5000</span><span class="skin-status skin-owned" id="skin-status-7" style="display:none;">USE</span></div>
                     </button>
-
                 </div>
             </div>
         </div>
@@ -190,16 +187,65 @@
             <img src="../assets/images/cloud.png" class="cloud" style="top: 40%; width: 160px; animation-duration: 45s; animation-delay: -30s;">
             <img src="../assets/images/cloud.png" class="cloud" style="top: 20%; width: 90px; animation-duration: 55s; animation-delay: -5s;">
         </div>
+
+        
+        <div id="tut-cycle" class="tutorial-el">
+            
+            <div style="grid-area: 1 / 3;"><img src="../assets/images/hook.png"></div>
+            <div style="grid-area: 1 / 4;"><img src="../assets/images/arrow.png" class="ptr-right"></div>
+            <div style="grid-area: 1 / 5;"><img src="../assets/images/trash.png"></div>
+
+            
+            <div style="grid-area: 2 / 3;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+            <div style="grid-area: 2 / 5;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+
+            
+            <div style="grid-area: 3 / 1;"><img src="../assets/images/rod.png"></div>
+            <div style="grid-area: 3 / 2;"><img src="../assets/images/arrow.png" class="ptr-left"></div>
+            <div style="grid-area: 3 / 3;"><img src="../assets/images/fish1.png"></div>
+            <div style="grid-area: 3 / 5;"><span class="red-x">X</span></div>
+
+            
+            <div style="grid-area: 4 / 1;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+            <div style="grid-area: 4 / 3;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+
+            
+            <div style="grid-area: 5 / 1;"><img src="../assets/images/boat2.png"></div>
+            <div style="grid-area: 5 / 3;"><img src="../assets/images/boat1.png"></div>
+
+            
+            <div style="grid-area: 6 / 3;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+
+            
+            <div style="grid-area: 7 / 3;"><img src="../assets/images/gold.png"></div>
+
+            
+            <div style="grid-area: 8 / 3;"><img src="../assets/images/arrow.png" class="ptr-down"></div>
+
+            
+            <div style="grid-area: 9 / 3;"><img src="../assets/images/shop.png"></div>
+        </div>
         
         <div id="water-group">
             <div id="boat">
+                
+                <div class="tutorial-el dynamic-ptr boat-tut">
+                    <span class="tut-text">Boat</span>
+                    <img src="../assets/images/arrow.png" class="ptr-down" alt="Down">
+                </div>
                 <img src="../assets/images/boat1.png" alt="Boat">
                 <div id="gold-rain-text">GOLD RAIN!</div>
             </div>
             <div id="auto-boat"><img src="../assets/images/boat1.png" alt="Auto Boat"></div> 
 
             <div id="fishing-line"></div>
-            <div id="hook"><img src="../assets/images/hook.png" alt="Hook"></div>
+            <div id="hook">
+                <img src="../assets/images/hook.png" alt="Hook" class="hook-img">
+                <div class="tutorial-el dynamic-ptr hook-tut">
+                    <img src="../assets/images/arrow.png" class="ptr-up" alt="Up">
+                    <img src="../assets/images/arrow.png" class="ptr-down" alt="Down">
+                </div>
+            </div>
 
             <div id="water">
                 <div class="water-surface wave-back"></div>
