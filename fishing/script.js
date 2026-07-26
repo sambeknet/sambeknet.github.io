@@ -22,6 +22,36 @@ let activePackage = null;
 let isGameActive = true; 
 let bgMusicStarted = false;
 
+
+let tutorialEnabled = false;
+
+
+window.addEventListener('load', () => {
+    
+    if (waterLvl === 1 && autoLvl === 0 && netLvl === 1 && goldenLvl === 1 && currentSkin === 1) {
+        
+        setTimeout(() => toggleTutorial(true), 500);
+    }
+});
+
+function toggleTutorial(forceState) {
+    tutorialEnabled = forceState !== undefined ? forceState : !tutorialEnabled;
+    const btn = document.getElementById('tutorial-toggle-btn');
+    
+    if (tutorialEnabled) {
+        document.body.classList.add('show-tutorial');
+        if(btn) btn.innerText = "Close Tutorial";
+    } else {
+        document.body.classList.remove('show-tutorial');
+        if(btn) btn.innerText = "Open Tutorial";
+    }
+}
+
+document.getElementById('tutorial-toggle-btn').addEventListener('click', () => {
+    toggleTutorial();
+});
+
+
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
@@ -35,7 +65,7 @@ const AUDIO_VOL = 0.06;
 const sfxMap = {
     splash: '../assets/sounds/splash.mp3',
     bell: '../assets/sounds/bell.mp3',
-    background: '../assets/sounds/background.mp3',
+    waves: '../assets/sounds/waves.mp3',
     accordion: '../assets/sounds/accordion.mp3',
     reel: '../assets/sounds/reel.mp3',
     buy: '../assets/sounds/buy.mp3',
@@ -73,7 +103,7 @@ function playSound(name, loop = false) {
     
     const gainNode = audioCtx.createGain();
     
-    if (name === 'background' || name === 'accordion') {
+    if (name === 'waves' || name === 'accordion') {
         gainNode.gain.value = 0.015; 
     } else {
         gainNode.gain.value = AUDIO_VOL; 
@@ -94,7 +124,7 @@ document.addEventListener('click', () => {
     if (audioCtx.state === 'suspended') audioCtx.resume();
     if (isGameActive && !bgMusicStarted) {
         bgMusicStarted = true;
-        playSound('background', true);
+        playSound('waves', true);
         setTimeout(() => { playSound('accordion', false); }, 5000);
     }
 }, { once: false });
@@ -146,7 +176,7 @@ document.addEventListener("touchstart", (e) => { mouseY = e.touches[0].clientY; 
 
 const upgradeCosts = [10, 100, 500, 1000, 2000, 4000, 10000];
 const fishValues = [1, 2, 4, 8, 16, 32];
-const waterPercentages = [15, 30, 45, 60, 75, 90];
+const waterPercentages = [15, 27, 39, 51, 63, 75]; 
 const autoIntervals = [0, 10000, 8000, 6000, 4000, 2000, 1000];
 const goldenChances = [50, 40, 30, 20, 10];
 const waterBottomColors = ["#4682B4", "#36648B", "#27408B", "#191970", "#000044", "#000022"];
@@ -223,6 +253,7 @@ document.getElementById("upg-water").addEventListener("click", () => {
         playSound('buy'); 
         gold -= upgradeCosts[waterLvl - 1]; 
         waterLvl++; 
+        if (tutorialEnabled) toggleTutorial(false);
         updateWaterHeight(); 
         updateUI(); 
     } 
@@ -232,6 +263,7 @@ document.getElementById("upg-auto").addEventListener("click", () => {
         playSound('buy'); 
         gold -= upgradeCosts[autoLvl]; 
         autoLvl++; 
+        if (tutorialEnabled) toggleTutorial(false);
         updateUI(); 
     } 
 });
@@ -240,6 +272,7 @@ document.getElementById("upg-net").addEventListener("click", () => {
         playSound('buy'); 
         gold -= upgradeCosts[netLvl - 1]; 
         netLvl++; 
+        if (tutorialEnabled) toggleTutorial(false);
         updateUI(); 
     } 
 });
@@ -248,6 +281,7 @@ document.getElementById("upg-golden").addEventListener("click", () => {
         playSound('buy'); 
         gold -= upgradeCosts[goldenLvl - 1]; 
         goldenLvl++; 
+        if (tutorialEnabled) toggleTutorial(false);
         updateUI(); 
     } 
 });
@@ -256,14 +290,14 @@ function updateWaterHeight() {
     let percentage = waterPercentages[waterLvl - 1];
     let bottomColor = waterBottomColors[waterLvl - 1];
     
-    document.getElementById("water").style.height = percentage + "vh";
+    document.getElementById("water").style.height = percentage + "%";
     
     let shiftUp = percentage - 15;
-    document.getElementById("atmosphere").style.transform = `translateY(-${shiftUp}vh)`;
+    document.getElementById("atmosphere").style.transform = `translateY(-${shiftUp}%)`;
     
     document.getElementById("water").style.background = `linear-gradient(to bottom, #4682B4 0%, ${bottomColor} 100%)`;
-    document.getElementById("boat").style.bottom = percentage + "vh";
-    document.getElementById("auto-boat").style.bottom = percentage + "vh";
+    document.getElementById("boat").style.bottom = percentage + "%";
+    document.getElementById("auto-boat").style.bottom = percentage + "%";
 
     if (waterLvl === 6) {
         document.getElementById("seabed").style.display = "block";
@@ -328,8 +362,10 @@ function checkSkinUnlocks() {
 
 function updateBoatSkin() {
     let boatSrc = `../assets/images/boat${currentSkin}.png`;
-    document.querySelector("#boat img").src = boatSrc;
-    document.querySelector("#auto-boat img").src = boatSrc;
+    
+    
+    document.querySelector("#boat > img").src = boatSrc;
+    document.querySelector("#auto-boat > img").src = boatSrc;
 }
 
 function updateSkinsUI() {
@@ -355,6 +391,7 @@ document.querySelectorAll('.skin-btn').forEach(btn => {
         let skinId = parseInt(btn.getAttribute('data-skin'));
         if (totalFish >= skinCosts[skinId - 1]) {
             currentSkin = skinId;
+            if (tutorialEnabled) toggleTutorial(false);
             updateBoatSkin();
             updateSkinsUI();
         }
@@ -410,45 +447,58 @@ function createSplash(x, y) {
 
 function updateHookDisplay() {
     let hookEl = document.getElementById("hook");
+    
+    let tutHtml = `
+        <div class="tutorial-el dynamic-ptr hook-tut">
+            <img src="../assets/images/arrow.png" class="ptr-up" alt="Up">
+            <img src="../assets/images/arrow.png" class="ptr-down" alt="Down">
+        </div>
+    `;
+
     if (hookedFishes.length === 0) {
-        hookEl.innerHTML = `<img src="../assets/images/hook.png" alt="Hook">`;
+        hookEl.innerHTML = `<img src="../assets/images/hook.png" alt="Hook" class="hook-img">` + tutHtml;
         return;
     }
 
     let html = '';
     if (hookedFishes.length === 1) {
-        html = `<img src="${hookedFishes[0].src}">`;
+        html = `<img src="${hookedFishes[0].src}" class="hook-img">`;
     } else if (hookedFishes.length === 2) {
-        html = `<div style="display:flex; gap:2px;"><img src="${hookedFishes[0].src}"><img src="${hookedFishes[1].src}"></div>`;
+        html = `<div style="display:flex; gap:2px;"><img src="${hookedFishes[0].src}" class="hook-img"><img src="${hookedFishes[1].src}" class="hook-img"></div>`;
     } else if (hookedFishes.length === 3) {
         html = `<div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-                    <div style="display:flex; gap:2px;"><img src="${hookedFishes[0].src}"><img src="${hookedFishes[1].src}"></div>
-                    <img src="${hookedFishes[2].src}">
+                    <div style="display:flex; gap:2px;"><img src="${hookedFishes[0].src}" class="hook-img"><img src="${hookedFishes[1].src}" class="hook-img"></div>
+                    <img src="${hookedFishes[2].src}" class="hook-img">
                 </div>`;
     } else if (hookedFishes.length === 4) {
         html = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:2px;">
-                    <img src="${hookedFishes[0].src}"><img src="${hookedFishes[1].src}">
-                    <img src="${hookedFishes[2].src}"><img src="${hookedFishes[3].src}">
+                    <img src="${hookedFishes[0].src}" class="hook-img"><img src="${hookedFishes[1].src}" class="hook-img">
+                    <img src="${hookedFishes[2].src}" class="hook-img"><img src="${hookedFishes[3].src}" class="hook-img">
                 </div>`;
     }
-    hookEl.innerHTML = html;
+    hookEl.innerHTML = html + tutHtml;
 }
 
 function spawnPackage() {
-    let dropDuration = (Math.random() * 5 + 10) * 1000; 
-    let openTime = 10000; 
+    let dropDuration = (Math.random() * 2 + 8) * 1000; 
+    let openTime = (Math.random() * 1 + 5) * 1000; 
     
     let pContainer = document.createElement("div");
     pContainer.id = "package-container";
+    
     pContainer.innerHTML = `
         <svg width="60" height="60" viewBox="0 0 60 60">
             <circle class="pkg-bg" cx="30" cy="30" r="26"></circle>
             <circle class="pkg-progress" cx="30" cy="30" r="26"></circle>
         </svg>
         <img src="../assets/images/package.png" alt="📦" onerror="this.outerHTML='<div style=\\'position:absolute;top:15px;left:18px;font-size:24px;\\'>📦</div>'">
+        <div class="tutorial-el dynamic-ptr pkg-tut">
+            <img src="../assets/images/arrow.png" class="ptr-left" alt="Left">
+            <span class="tut-text">Package</span>
+        </div>
     `;
     
-    document.getElementById("fish-container").appendChild(pContainer);
+    document.getElementById("game-world").appendChild(pContainer);
     
     let boatRect = document.getElementById("boat").getBoundingClientRect();
     pContainer.style.left = boatRect.left + (boatRect.width / 2) + "px";
@@ -459,10 +509,6 @@ function spawnPackage() {
     
     activePackage = { el: pContainer, y: startY, speed: speed, progress: 0, maxProgress: openTime };
 }
-
-setInterval(() => {
-    if (isGameActive && !activePackage && Math.random() < 0.01) spawnPackage();
-}, 60000);
 
 setInterval(function spawnSeagull() {
     if (!isGameActive) return; 
@@ -512,6 +558,19 @@ function spawnFish(lineIndex) {
     let imgEl = document.createElement("img");
     imgEl.src = imgSrc;
     fishEl.appendChild(imgEl);
+    
+    let tutLabel = "Fish";
+    if (type === "trash") tutLabel = "Trash";
+    else if (type === "special") tutLabel = "Special";
+    else if (type === "golden") tutLabel = "Golden";
+
+    let tutHtml = document.createElement("div");
+    tutHtml.className = "tutorial-el dynamic-ptr fish-tut";
+    tutHtml.innerHTML = `
+        <img src="../assets/images/arrow.png" class="ptr-left" alt="Left">
+        <span class="tut-text">${tutLabel}</span>
+    `;
+    fishEl.appendChild(tutHtml);
 
     let direction = Math.random() > 0.5 ? 1 : -1;
     let swimTime = Math.random() * (swimBounds[1] - swimBounds[0]) + swimBounds[0];
@@ -519,14 +578,23 @@ function spawnFish(lineIndex) {
     let pixelsPerFrame = (screenWidth / (swimTime * 30)) * direction;
     
     fishEl.setAttribute("data-speed", pixelsPerFrame);
+    
     if (direction === 1) {
-        fishEl.style.left = "-80px"; fishEl.style.transform = "scaleX(-1)";
+        fishEl.style.left = "-80px"; 
+        imgEl.style.transform = "scaleX(-1)"; 
     } else {
         fishEl.style.left = screenWidth + "px";
     }
     
+    
     let waterHeight = document.getElementById("water").clientHeight;
-    let lineSpacing = waterHeight / waterLvl;
+    
+    
+    let isMobile = window.innerWidth <= 600;
+    let safeBottomPadding = isMobile ? 35 : 0; 
+    let usableWaterHeight = waterHeight - safeBottomPadding;
+    
+    let lineSpacing = usableWaterHeight / waterLvl;
     let fishY = (lineIndex * lineSpacing) + (lineSpacing / 2) - 25;
     fishEl.style.top = fishY + "px";
     document.getElementById("fish-container").appendChild(fishEl);
@@ -574,7 +642,7 @@ setInterval(() => {
 setInterval(() => {
     if (!isGameActive) return; 
 
-    let hookImgEl = document.querySelector("#hook img");
+    let hookImgEl = document.querySelector("#hook .hook-img");
 
     if (stunTimer > 0) {
         stunTimer -= 33;
@@ -698,7 +766,11 @@ setInterval(() => {
         playSound('bell');
         
         let batchGold = 0;
-        hookedFishes.forEach(fish => { batchGold += fish.value; });
+        hookedFishes.forEach(fish => { 
+            batchGold += fish.value; 
+            
+            if (!activePackage && Math.random() < 0.01) spawnPackage();
+        });
         
         gold += batchGold; totalGold += batchGold;
         manualFish += hookedFishes.length; totalFish += hookedFishes.length;
@@ -734,6 +806,8 @@ setInterval(() => {
             
             gold += finalValue; totalGold += finalValue; totalFish++;
             
+            if (!activePackage && Math.random() < 0.01) spawnPackage();
+            
             checkSkinUnlocks(); 
             
             let autoBoatRect = document.getElementById("auto-boat").getBoundingClientRect();
@@ -748,19 +822,11 @@ setInterval(() => { saveGame(); }, 5000);
 loadGame();
 
 const nav = document.getElementById('pageNav');
-const scrollTopBtn = document.querySelector('.scroll-top-btn');
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
   const currentScrollY = window.scrollY;
-  if (currentScrollY > lastScrollY && currentScrollY > 120) nav.classList.add('hidden');
-  else nav.classList.remove('hidden');
+  if (currentScrollY > lastScrollY && currentScrollY > 120) nav.classList.add('nav-hidden');
+  else nav.classList.remove('nav-hidden');
   lastScrollY = currentScrollY;
 });
-
-if (scrollTopBtn) {
-  scrollTopBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
