@@ -9,9 +9,31 @@
 </head>
 <body>
   <div id="black-veil-enter"></div>
+  
+  
+  <div id="water-line">
+      <div class="water-surface wave-back"></div>
+      <div class="water-surface wave-front"></div>
+  </div>
+  
+  <div id="secret-boat">
+      <img src="assets/images/boat1.png" alt="Secret Boat">
+  </div>
+
   <nav class="centered-nav" id="pageNav">
     <a class="nav-brand">sambeknet.github.io</a>
-    <a class="nav-placeholder" id="go-to-fishing-btn" href="/fishing" aria-label="Fishing">🎣</a>
+    
+    
+    <div class="nav-controls">
+      <div id="door-input-container" class="hidden">
+        <div class="glass-input-wrapper">
+          <span class="input-prefix">/</span>
+          <input type="text" id="door-input" autocomplete="off" spellcheck="false" placeholder="password?">
+        </div>
+        <span id="door-error" class="hidden">wrong password.</span>
+      </div>
+      <a class="nav-placeholder" id="door-btn" aria-label="Door">🚪</a>
+    </div>
   </nav>
 
   <main>
@@ -21,28 +43,29 @@
       <h2>About</h2>
       <div class="about-layout">
         <p class="about-copy">Hello! I’m Samet Bekiroğlu, a computer engineering student at Afyon Kocatepe University. When it comes to my studies, I am especially interested in learning about artificial intelligence and exploring different coding languages. I’ve also completed two Erasmus programs, living mainly in Hungary and Romania, which gave me the chance to travel across several other countries. I am a very extroverted person, so whether I am at university or traveling abroad, I love meeting new people and spending time with my friends.</p>
-        <div class="about-widget">
-          <!-- Elfsight Slider | Untitled Slider -->
-          <script src="https://elfsightcdn.com/platform.js" async></script>
-          <div class="elfsight-app-bad7ab0c-1f83-40f1-a68c-c5509ea957e3" data-elfsight-app-lazy></div>
-        </div>
+        
+        
+        <div class="about-widget custom-slider" id="about-slider"></div>
+
       </div>
     </section>
 
     <section class="content hobbies" id="hobbies">
       <h2>Hobbies</h2>
       <p>These are some of the visual interests and creative references I keep returning to for inspiration.</p>
-      <!-- Elfsight Photo Gallery | Untitled Photo Gallery -->
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-61825491-1241-4702-829f-787aecb43cda" data-elfsight-app-lazy></div>
+      
+      
+      <div class="custom-gallery" id="hobbies-gallery"></div>
+
     </section>
 
     <section class="content places" id="places">
       <h2>Places</h2>
       <p>Discover the locations and brand showcases I enjoy, displayed in a full-width experience.</p>
-      <!-- Elfsight Logo Showcase | Untitled Logo Showcase -->
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-6730edbc-4604-4e77-a088-8070a4daf69a" data-elfsight-app-lazy></div>
+      
+      
+      <div class="custom-marquee" id="places-marquee"></div>
+
     </section>
 
     <section class="content" id="projects">
